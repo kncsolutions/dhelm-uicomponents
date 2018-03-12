@@ -15,9 +15,11 @@
 */
 package in.kncsolutions.dhelm.uicomponents.dcontainers;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text; 
+import javafx.scene.text.Text;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
 import javafx.scene.text.Font;
@@ -28,6 +30,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Separator;
 /**
 *
 */
@@ -36,9 +39,11 @@ private BorderPane bPane;
 private ToolBar maintoolBar; 
 private StackPane descriptionBox,rightContainer;
 private TabPane tCenterPane,tRightPane,tBottomPane;
+private GridPane gRightPane;
 private Tab t;
-private VBox v;
+private VBox v,buttonContainer;
 private Text description;
+private Button hide;
 private ScrollPane spR;
 
 /**
@@ -48,6 +53,8 @@ public DTerminal(){
   maintoolBar = new ToolBar();
   tCenterPane=new TabPane();
   tBottomPane=new TabPane();
+  setButtonControlForRightBar();
+  gRightPane=new GridPane();
   tRightPane=new TabPane();
   t=new Tab();
   t.setText("Home");
@@ -55,6 +62,17 @@ public DTerminal(){
   bPane.setTop(maintoolBar);
   setCentre();
   setBottom();
+}
+/**
+* 
+*/
+private void setButtonControlForRightBar() {
+	hide=new Button("\u2261");
+	buttonContainer=new VBox();
+	buttonContainer.getChildren().add(new Separator());
+	buttonContainer.getChildren().add(hide);
+	buttonContainer.getChildren().add(new Separator());
+	
 }
 /**
 *This method is used to set the main toolbar contents
@@ -94,8 +112,11 @@ public void setRight(){
   rightContainer.setPadding(new Insets(5, 5, 5, 5));
   rightContainer.setAlignment(Pos.TOP_CENTER);
   spR=new ScrollPane(tRightPane);
-  rightContainer.getChildren().add(spR);
-  bPane.setRight(rightContainer);
+  rightContainer.getChildren().add(spR);  
+  rightContainer.setVisible(false);
+  gRightPane.add(rightContainer,0,0);
+  gRightPane.add(hide, 1, 0);
+  bPane.setRight(gRightPane);
 }
 
 /**
